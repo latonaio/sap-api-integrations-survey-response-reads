@@ -1,0 +1,16 @@
+{
+	"cursor": "/Users/latona5/bitbucket/sap-api-integrations-survey-response-reads/SAP_API_Caller/caller.go#L53",
+	"function": "sap-api-integrations-survey-response-reads/SAP_API_Caller.(*SAPAPICaller).SurveyResponse",
+	"level": "INFO",
+	"message": [
+		{
+			"ObjectID": "00163E04DCEB1ED2BFF75DD91A32A7FF",
+			"ID": "4",
+			"EntityLastChangedOn": "2019-04-24T17:53:13+09:00",
+			"ETag": "2019-04-24T17:53:13+09:00",
+			"SurveyCreationDate": "2013-08-08T08:42:14+09:00",
+			"SurveyResponse": "https://sandbox.api.sap.com/sap/c4c/odata/v1/c4codataapi/SurveyResponseRootCollection('00163E04DCEB1ED2BFF75DD91A32A7FF')/SurveyResponse"
+		}
+	],
+	"time": "2022-07-20T13:40:17+09:00"
+}

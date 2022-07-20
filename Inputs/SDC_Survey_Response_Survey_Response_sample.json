@@ -1,0 +1,20 @@
+{
+	"connection_key": "response",
+	"result": true,
+	"redis_key": "abcdefg",
+	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
+	"SurveyResponse": {
+		"ObjectID":"",           
+		"ID":"4",                 
+		"EntityLastChangedOn":"",
+		"ETag":"",               
+		"SurveyCreationDate":"", 
+		"SurveyResponse":{
+			
+		}
+	},
+	"api_schema": "SurveyResponseSurveyResponse",
+	"accepter": ["SurveyResponse"],
+	"survey_response_code": "4",
+	"deleted": false
+}
