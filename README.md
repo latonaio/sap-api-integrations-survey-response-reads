@@ -25,6 +25,9 @@ sap-api-integrations-survey-response-reads が対応する APIサービス は�
 sap-api-integrations-survey-response-reads には、次の API をコールするためのリソースが含まれています。  
 
 * SurveyResponse（調査回答 - 調査回答）
+* SurveyValuation（調査回答 - 調査評価）
+* SurveyValuationItem（調査回答 - 調査評価項目）
+* SurveyQuestionAnswers（調査回答 - 調査質問回答）
 
 ## API への 値入力条件 の 初期値
 sap-api-integrations-survey-response-reads において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
@@ -32,6 +35,9 @@ sap-api-integrations-survey-response-reads において、API への値入力条
 ### SDC レイアウト
 
 * inoutSDC.SurveyResponse.ID（ID）  
+* inoutSDC.SurveyValuation.Version（バージョン）
+* inoutSDC.SurveyValuationItem.ProductID（製品ID）
+* inoutSDC.SurveyQuestionAnswers.QuestionUUID（質問UUID）
 
 ## SAP API Bussiness Hub の API の選択的コール
 
@@ -67,7 +73,7 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetSurveyResponse(iD string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, version, productID, questionUUID string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -75,6 +81,21 @@ func (c *SAPAPICaller) AsyncGetSurveyResponse(iD string, accepter []string) {
 		case "SurveyResponse":
 			func() {
 				c.SurveyResponse(iD)
+				wg.Done()
+			}()
+		case "SurveyValuation":
+			func() {
+				c.SurveyValuation(version)
+				wg.Done()
+			}()
+		case "SurveyValuationItem":
+			func() {
+				c.SurveyValuationItem(productID)
+				wg.Done()
+			}()
+		case "SurveyQuestionAnswers":
+			func() {
+				c.SurveyQuestionAnswers(questionUUID)
 				wg.Done()
 			}()
 		default:
@@ -89,7 +110,7 @@ func (c *SAPAPICaller) AsyncGetSurveyResponse(iD string, accepter []string) {
 ## Output  
 本マイクロサービスでは、[golang-logging-library-for-sap](https://github.com/latonaio/golang-logging-library-for-sap) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 調査回答  の 調査回答データ が取得された結果の JSON の例です。  
-以下の項目のうち、"ObjectID" ～ "SurveyResponse" は、/SAP_API_Output_Formatter/type.go 内 の Type SurveyResponse {} による出力結果です。"cursor" ～ "time"は、golang-logging-library-for-sap による 定型フォーマットの出力結果です。  
+以下の項目のうち、"ObjectID" ～ "CampaignInboundBusinessTransactionDocumentReference" は、/SAP_API_Output_Formatter/type.go 内 の Type SurveyResponse {} による出力結果です。"cursor" ～ "time"は、golang-logging-library-for-sap による 定型フォーマットの出力結果です。  
 
 ```
 {

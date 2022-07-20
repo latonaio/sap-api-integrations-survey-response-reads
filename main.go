@@ -10,7 +10,7 @@ import (
 func main() {
 	l := logger.NewLogger()
 	fr := sap_api_input_reader.NewFileReader()
-	inoutSDC := fr.ReadSDC("./Inputs/SDC_Survey_Response_Survey_Response_sample.json")
+	inoutSDC := fr.ReadSDC("./Inputs/SDC_Survey_Response_Survey_Valuation_Item_sample.json")
 	caller := sap_api_caller.NewSAPAPICaller(
 		"https://sandbox.api.sap.com/sap/c4c/odata/v1/", l,
 	)
@@ -18,12 +18,15 @@ func main() {
 	accepter := inoutSDC.Accepter
 	if len(accepter) == 0 || accepter[0] == "All" {
 		accepter = []string{
-			"SurveyResponse",
+			"SurveyResponse", "SurveyValuation", "SurveyValuationItem", "SurveyQuestionAnswers",
 		}
 	}
 
 	caller.AsyncGetSurveyResponse(
 		inoutSDC.SurveyResponse.ID,
+		inoutSDC.SurveyResponse.SurveyValuation.Version,
+		inoutSDC.SurveyResponse.SurveyValuation.SurveyValuationItem.ProductID,
+		inoutSDC.SurveyResponse.SurveyValuation.SurveyValuationItem.SurveyQuestionAnswers.QuestionUUID,
 		accepter,
 	)
 }

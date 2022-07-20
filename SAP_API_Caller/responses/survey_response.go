@@ -13,11 +13,6 @@ type SurveyResponse struct {
 			EntityLastChangedOn string `json:"EntityLastChangedOn"`
 			ETag                string `json:"ETag"`
 			SurveyCreationDate  string `json:"SurveyCreationDate"`
-			SurveyResponse      struct {
-				Deferred struct {
-					URI string `json:"uri"`
-				} `json:"__deferred"`
-			} `json:"SurveyResponse"`
 		} `json:"results"`
 	} `json:"d"`
 }

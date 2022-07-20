@@ -5,7 +5,7 @@
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
 	"SurveyResponse": {
 		"ObjectID":"",           
-		"ID":"4",                 
+		"ID":"",                 
 		"EntityLastChangedOn":"",
 		"ETag":"",               
 		"SurveyCreationDate":"", 
@@ -13,7 +13,7 @@
             "ObjectID":"",                                    
             "ParentObjectID":"",                              
             "ID":"",                                          
-            "Version":"1",                                     
+            "Version":"",                                     
             "BusinessTransactionDocumentID":"",               
             "BusinessTransactionDocumentUUID":"",             
             "BusinessTransactionDocumentTypeCode":"",         
@@ -33,7 +33,7 @@
             "SurveyValuationItem": {
                 "ObjectID":"",                 
                 "ParentObjectID":"",           
-                "ProductID":"",                
+                "ProductID":"P300104",                
                 "ProductUUID":"",              
                 "ProductCategoryID":"",        
                 "ProductCategoryUUID":"",      
@@ -69,7 +69,7 @@
 		}
 	},
 	"api_schema": "SurveyResponse",
-	"accepter": ["SurveyResponse"],
-	"campaign_code": "4",
+	"accepter": ["SurveyValuationItem"],
+	"campaign_code": "",
 	"deleted": false
 }
