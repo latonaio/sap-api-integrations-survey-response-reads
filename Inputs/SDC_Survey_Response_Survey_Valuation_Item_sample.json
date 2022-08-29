@@ -4,7 +4,7 @@
 	"redis_key": "abcdefg",
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
 	"SurveyResponse": {
-		"ObjectID":"",           
+		"ObjectID":"00163E04DCEB1ED2BFF75DD91A32A7FF",           
 		"ID":"",                 
 		"EntityLastChangedOn":"",
 		"ETag":"",               
@@ -21,7 +21,7 @@
             "ProcessorID":"",                                 
             "ProcessorUUID":"",                               
             "RepresentationBinaryObject":"",                  
-            "RepresentationBinaryObjectResponseIndicator":"", 
+            "RepresentationBinaryObjectResponseIndicator":false, 
             "DesignTimeVersionUUID":"",                       
             "LifeCycleStatusCode":"",                         
             "LifeCycleStatusCodeText":"",                     
@@ -31,7 +31,7 @@
             "SignatureUUID":"",                               
             "TransactionDocumentUUID":"",   
             "SurveyValuationItem": {
-                "ObjectID":"",                 
+                "ObjectID":"00163E05AE661EE38FF0E715029FE9E2",                 
                 "ParentObjectID":"",           
                 "ProductID":"P300104",                
                 "ProductUUID":"",              
@@ -39,7 +39,7 @@
                 "ProductCategoryUUID":"",      
                 "PartyID":"",                  
                 "PartyUUID":"",                
-                "FinishedIndicator":"",        
+                "FinishedIndicator":false,        
                 "ETag":"",                     
                 "CompletionRatePerProduct":"",  
                 "SurveyQuestionAnswers": {
@@ -55,7 +55,7 @@
                     "CurrencyCode":"",              
                     "CurrencyCodeText":"",          
                     "Date":"",                      
-                    "NumericValue":"",              
+                    "NumericValue":0,              
                     "Quantity":"",                  
                     "UnitOfMeasure":"",             
                     "UnitOfMeasureText":"",         
@@ -70,6 +70,6 @@
 	},
 	"api_schema": "SurveyResponse",
 	"accepter": ["SurveyValuationItem"],
-	"campaign_code": "",
+	"survey_response_code": "P300104",
 	"deleted": false
 }

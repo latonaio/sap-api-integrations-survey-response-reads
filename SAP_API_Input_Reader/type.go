@@ -75,7 +75,7 @@ type SDC struct {
 			ProcessorID                                 string `json:"ProcessorID"`
 			ProcessorUUID                               string `json:"ProcessorUUID"`
 			RepresentationBinaryObject                  string `json:"RepresentationBinaryObject"`
-			RepresentationBinaryObjectResponseIndicator string `json:"RepresentationBinaryObjectResponseIndicator"`
+			RepresentationBinaryObjectResponseIndicator bool   `json:"RepresentationBinaryObjectResponseIndicator"`
 			DesignTimeVersionUUID                       string `json:"DesignTimeVersionUUID"`
 			LifeCycleStatusCode                         string `json:"LifeCycleStatusCode"`
 			LifeCycleStatusCodeText                     string `json:"LifeCycleStatusCodeText"`
@@ -93,7 +93,7 @@ type SDC struct {
 				ProductCategoryUUID      string `json:"ProductCategoryUUID"`
 				PartyID                  string `json:"PartyID"`
 				PartyUUID                string `json:"PartyUUID"`
-				FinishedIndicator        string `json:"FinishedIndicator"`
+				FinishedIndicator        bool   `json:"FinishedIndicator"`
 				ETag                     string `json:"ETag"`
 				CompletionRatePerProduct string `json:"CompletionRatePerProduct"`
 				SurveyQuestionAnswers    struct {
@@ -109,7 +109,7 @@ type SDC struct {
 					CurrencyCode               string `json:"CurrencyCode"`
 					CurrencyCodeText           string `json:"CurrencyCodeText"`
 					Date                       string `json:"Date"`
-					NumericValue               string `json:"NumericValue"`
+					NumericValue               int    `json:"NumericValue"`
 					Quantity                   string `json:"Quantity"`
 					UnitOfMeasure              string `json:"UnitOfMeasure"`
 					UnitOfMeasureText          string `json:"UnitOfMeasureText"`
@@ -122,8 +122,8 @@ type SDC struct {
 			} `json:"SurveyValuationItem"`
 		} `json:"SurveyValuation"`
 	} `json:"SurveyResponse"`
-	APISchema    string   `json:"api_schema"`
-	Accepter     []string `json:"accepter"`
-	CampaignCode string   `json:"campaign_code"`
-	Deleted      bool     `json:"deleted"`
+	APISchema          string   `json:"api_schema"`
+	Accepter           []string `json:"accepter"`
+	SurveyResponseCode string   `json:"survey_response_code"`
+	Deleted            bool     `json:"deleted"`
 }

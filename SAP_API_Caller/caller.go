@@ -26,7 +26,7 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, processorID, productID, questionUUID string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetSurveyResponse(objectID, iD, version, productID, questionUUID string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -38,17 +38,17 @@ func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, processorID, productID, questi
 			}()
 		case "SurveyValuation":
 			func() {
-				c.SurveyValuation(processorID)
+				c.SurveyValuation(iD, version)
 				wg.Done()
 			}()
 		case "SurveyValuationItem":
 			func() {
-				c.SurveyValuationItem(productID)
+				c.SurveyValuationItem(objectID, productID)
 				wg.Done()
 			}()
 		case "SurveyQuestionAnswers":
 			func() {
-				c.SurveyQuestionAnswers(questionUUID)
+				c.SurveyQuestionAnswers(objectID, questionUUID)
 				wg.Done()
 			}()
 		default:
@@ -90,8 +90,8 @@ func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyResponse(api, iD
 	return data, nil
 }
 
-func (c *SAPAPICaller) SurveyValuation(processorID string) {
-	surveyValuationData, err := c.callSurveyResponseSrvAPIRequirementSurveyValuation("SurveyResponseCollection", processorID)
+func (c *SAPAPICaller) SurveyValuation(iD, version string) {
+	surveyValuationData, err := c.callSurveyResponseSrvAPIRequirementSurveyValuation("SurveyResponseCollection", iD, version)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -100,12 +100,12 @@ func (c *SAPAPICaller) SurveyValuation(processorID string) {
 
 }
 
-func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuation(api, processorID string) ([]sap_api_output_formatter.SurveyValuation, error) {
+func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuation(api, iD, version string) ([]sap_api_output_formatter.SurveyValuation, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithSurveyValuation(req, processorID)
+	c.getQueryWithSurveyValuation(req, iD, version)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -121,8 +121,8 @@ func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuation(api, p
 	return data, nil
 }
 
-func (c *SAPAPICaller) SurveyValuationItem(productID string) {
-	surveyValuationItemData, err := c.callSurveyResponseSrvAPIRequirementSurveyValuationItem("SurveyResponseItemCollection", productID)
+func (c *SAPAPICaller) SurveyValuationItem(objectID, productID string) {
+	surveyValuationItemData, err := c.callSurveyResponseSrvAPIRequirementSurveyValuationItem("SurveyResponseItemCollection", objectID, productID)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -131,12 +131,12 @@ func (c *SAPAPICaller) SurveyValuationItem(productID string) {
 
 }
 
-func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuationItem(api, productID string) ([]sap_api_output_formatter.SurveyValuationItem, error) {
+func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuationItem(api, objectID, productID string) ([]sap_api_output_formatter.SurveyValuationItem, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithSurveyValuationItem(req, productID)
+	c.getQueryWithSurveyValuationItem(req, objectID, productID)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -152,8 +152,8 @@ func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyValuationItem(ap
 	return data, nil
 }
 
-func (c *SAPAPICaller) SurveyQuestionAnswers(questionUUID string) {
-	surveyQuestionAnswersData, err := c.callSurveyResponseSrvAPIRequirementSurveyQuestionAnswers("SurveyQuestionAnswersCollection", questionUUID)
+func (c *SAPAPICaller) SurveyQuestionAnswers(objectID, questionUUID string) {
+	surveyQuestionAnswersData, err := c.callSurveyResponseSrvAPIRequirementSurveyQuestionAnswers("SurveyQuestionAnswersCollection", objectID, questionUUID)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -162,12 +162,12 @@ func (c *SAPAPICaller) SurveyQuestionAnswers(questionUUID string) {
 
 }
 
-func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyQuestionAnswers(api, questionUUID string) ([]sap_api_output_formatter.SurveyQuestionAnswers, error) {
+func (c *SAPAPICaller) callSurveyResponseSrvAPIRequirementSurveyQuestionAnswers(api, objectID, questionUUID string) ([]sap_api_output_formatter.SurveyQuestionAnswers, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithSurveyQuestionAnswers(req, questionUUID)
+	c.getQueryWithSurveyQuestionAnswers(req, objectID, questionUUID)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -194,20 +194,20 @@ func (c *SAPAPICaller) getQueryWithSurveyResponse(req *http.Request, iD string) 
 	req.URL.RawQuery = params.Encode()
 }
 
-func (c *SAPAPICaller) getQueryWithSurveyValuation(req *http.Request, processorID string) {
+func (c *SAPAPICaller) getQueryWithSurveyValuation(req *http.Request, iD, version string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("ProcessorID eq '%s'", processorID))
+	params.Add("$filter", fmt.Sprintf("ID eq '%s' and Version eq '%s'", iD, version))
 	req.URL.RawQuery = params.Encode()
 }
 
-func (c *SAPAPICaller) getQueryWithSurveyValuationItem(req *http.Request, productID string) {
+func (c *SAPAPICaller) getQueryWithSurveyValuationItem(req *http.Request, objectID, productID string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("ProductID eq '%s'", productID))
+	params.Add("$filter", fmt.Sprintf("ObjectID eq '%s' and ProductID eq '%s'", objectID, productID))
 	req.URL.RawQuery = params.Encode()
 }
 
-func (c *SAPAPICaller) getQueryWithSurveyQuestionAnswers(req *http.Request, questionUUID string) {
+func (c *SAPAPICaller) getQueryWithSurveyQuestionAnswers(req *http.Request, objectID, questionUUID string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("QuestionUUID eq '%s'", questionUUID))
+	params.Add("$filter", fmt.Sprintf("ObjectID eq '%s' and QuestionUUID eq '%s'", objectID, questionUUID))
 	req.URL.RawQuery = params.Encode()
 }

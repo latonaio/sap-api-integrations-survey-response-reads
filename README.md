@@ -2,7 +2,7 @@
 sap-api-integrations-survey-response-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API 調査回答データを取得するマイクロサービスです。  
 sap-api-integrations-survey-response-reads には、サンプルのAPI Json フォーマットが含まれています。  
 sap-api-integrations-survey-response-reads は、オンプレミス版である（＝クラウド版ではない）SAPC4HANA API の利用を前提としています。クラウド版APIを利用する場合は、ご注意ください。  
-https://api.sap.com/api/campaign/overview  
+https://api.sap.com/api/surveyresponse/overview  
 
 ## 動作環境
 sap-api-integrations-survey-response-reads は、主にエッジコンピューティング環境における動作にフォーカスしています。   
@@ -18,7 +18,7 @@ sap-api-integrations-survey-response-reads は、外部システムがクラウ�
 ## 本レポジトリ が 対応する API サービス
 sap-api-integrations-survey-response-reads が対応する APIサービス は、次のものです。
 
-* APIサービス概要説明 URL: https://api.sap.com/api/campaign/overview 
+* APIサービス概要説明 URL: https://api.sap.com/api/surveyresponse/overview  
 * APIサービス名(=baseURL): c4codataapi
 
 ## 本レポジトリ に 含まれる API名
@@ -34,10 +34,11 @@ sap-api-integrations-survey-response-reads において、API への値入力条
 
 ### SDC レイアウト
 
+* inoutSDC.SurveyResponse.ObjectID（対象ID）
 * inoutSDC.SurveyResponse.ID（ID）  
-* inoutSDC.SurveyValuation.Version（バージョン）
-* inoutSDC.SurveyValuationItem.ProductID（製品ID）
-* inoutSDC.SurveyQuestionAnswers.QuestionUUID（質問UUID）
+* inoutSDC.SurveyResponse.SurveyValuation.Version（バージョン）
+* inoutSDC.SurveyResponse.SurveyValuation.SurveyValuationItem.ProductID（製品ID）
+* inoutSDC.SurveyResponse.SurveyValuation.SurveyValuationItem.SurveyQuestionAnswers.QuestionUUID（質問UUID）
 
 ## SAP API Bussiness Hub の API の選択的コール
 
@@ -50,7 +51,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"SurveyResponse" が指定されています。    
   
 ```
-	"api_schema": "SurveyResponseSurveyResponse",
+	"api_schema": "SurveyResponse",
 	"accepter": ["SurveyResponse"],
 	"survey_response_code": "4",
 	"deleted": false
@@ -61,7 +62,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-	"api_schema": "SurveyResponseSurveyResponse",
+	"api_schema": "SurveyResponse",
 	"accepter": ["All"],
 	"survey_response_code": "4",
 	"deleted": false
@@ -73,7 +74,7 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, version, productID, questionUUID string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, version, objectID, productID, questionUUID string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -85,17 +86,17 @@ func (c *SAPAPICaller) AsyncGetSurveyResponse(iD, version, productID, questionUU
 			}()
 		case "SurveyValuation":
 			func() {
-				c.SurveyValuation(version)
+				c.SurveyValuation(iD, version)
 				wg.Done()
 			}()
 		case "SurveyValuationItem":
 			func() {
-				c.SurveyValuationItem(productID)
+				c.SurveyValuationItem(objectID, productID)
 				wg.Done()
 			}()
 		case "SurveyQuestionAnswers":
 			func() {
-				c.SurveyQuestionAnswers(questionUUID)
+				c.SurveyQuestionAnswers(objectID, questionUUID)
 				wg.Done()
 			}()
 		default:

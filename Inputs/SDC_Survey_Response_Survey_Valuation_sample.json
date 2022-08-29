@@ -12,8 +12,8 @@
         "SurveyValuation": {
             "ObjectID":"",                                    
             "ParentObjectID":"",                              
-            "ID":"",                                          
-            "Version":"",                                     
+            "ID":"3                                  ",                                          
+            "Version":"1                               ",                                     
             "BusinessTransactionDocumentID":"",               
             "BusinessTransactionDocumentUUID":"",             
             "BusinessTransactionDocumentTypeCode":"",         
@@ -21,7 +21,7 @@
             "ProcessorID":"",                                 
             "ProcessorUUID":"",                               
             "RepresentationBinaryObject":"",                  
-            "RepresentationBinaryObjectResponseIndicator":"", 
+            "RepresentationBinaryObjectResponseIndicator":false, 
             "DesignTimeVersionUUID":"",                       
             "LifeCycleStatusCode":"",                         
             "LifeCycleStatusCodeText":"",                     
@@ -39,7 +39,7 @@
                 "ProductCategoryUUID":"",      
                 "PartyID":"",                  
                 "PartyUUID":"",                
-                "FinishedIndicator":"",        
+                "FinishedIndicator":false,        
                 "ETag":"",                     
                 "CompletionRatePerProduct":"",  
                 "SurveyQuestionAnswers": {
@@ -55,7 +55,7 @@
                     "CurrencyCode":"",              
                     "CurrencyCodeText":"",          
                     "Date":"",                      
-                    "NumericValue":"",              
+                    "NumericValue":0,              
                     "Quantity":"",                  
                     "UnitOfMeasure":"",             
                     "UnitOfMeasureText":"",         
@@ -70,6 +70,6 @@
 	},
 	"api_schema": "SurveyResponse",
 	"accepter": ["SurveyValuation"],
-	"campaign_code": "",
+	"survey_response_code": "1",
 	"deleted": false
 }
